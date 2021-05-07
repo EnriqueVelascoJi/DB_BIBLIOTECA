@@ -14,7 +14,7 @@ LIB_precio DECIMAL(6,2) NOT NULL
 --MODYFYING THE TABLE LIBRO TO ADD CHECKS
 ALTER TABLE libro
 ADD CHECK (LIB_copias_venta>=0),
-ADD CHECK (LIB_copias_servicio>=0);
+ADD CHECK (LIB_copias_servicio>=0);dc
 
 
 --CREATE TABLE PRESTAMO 
@@ -67,3 +67,83 @@ CHECK (DV_descuento>=0)
 
 
 
+--Tablas con relacion a los socios
+--Tablas: Socio
+
+CREATE TABLE Socio(
+SOC_id SERIAL PRIMARY KEY,
+SOC_Nombre VARCHAR(40) NOT NULL,
+SOC_Telefono VARCHAR(15) NOT NULL,
+SOC_Email VARCHAR(50),
+SOC_Direccion VARCHAR(50) NOT NULL,
+SOC_Reputacion VARCHAR(20) NOT NULL,
+SOC_Puntos INTEGER NOT NULL,
+SOC_Identificador INTEGER NOT NULL,
+CHECK (SOC_Reputacion in ('Sin reputacion','Buena','Mala','Excelente')),
+CHECK (SOC_Puntos>=0)
+);
+
+--Tablas con informacion de rentas
+--Tablas: Renta & Ficha_Renta
+
+CREATE TABLE Renta (
+REN_id SERIAL PRIMARY KEY,
+REN_Fecha_Renta DATE NOT NULL,
+REN_Fechs_Regreso DATE NOT NULL,
+SOC_id INTEGER NOT NULL,
+	
+FOREIGN KEY (SOC_id) REFERENCES Socio(SOC_id)
+);
+
+--
+CREATE TABLE Ficha_Renta(
+FR_id SERIAL PRIMARY KEY,
+FR_estado BOOL NOT NULL,
+
+REN_id INTEGER NOT NULL,
+LIB_id INTEGER NOT NULL,
+
+FOREIGN KEY (REN_id) REFERENCES Renta(REN_id),
+FOREIGN KEY (LIB_id) REFERENCES Libro(LIB_id)
+);
+
+--Informacion de listas de espera y multas
+--Tablas: Lista_Espera  &  Multa
+
+CREATE TABLE Lista_Espera(
+LE_id SERIAL PRIMARY KEY,
+LE_Estado BOOL NOT NULL,
+
+SOC_id INTEGER NOT NULL,
+LIB_id INTEGER NOT NULL,
+
+FOREIGN KEY (SOC_id) REFERENCES Socio(SOC_id),
+FOREIGN KEY (LIB_id) REFERENCES Libro(LIB_id)
+);
+--
+CREATE TABLE Multa(
+MUL_id SERIAL NOT NULL,
+MUL_monto DECIMAL (6,2) NOT NULL,
+MUL_descripcion VARCHAR(50) NOT NULL,
+MUL_Estado BOOL NOT NULL,
+	
+SOC_id INTEGER NOT NULL,
+	
+FOREIGN KEY (SOC_id) REFERENCES Socio(SOC_id)
+);
+
+--Creacion de la tabla con informacion de sucursales
+--Tabla: Sedes
+
+CREATE TABLE Sedes(
+SED_id SERIAL PRIMARY KEY,
+SED_direccion VARCHAR(50) NOT NULL,
+SED_Telefono VARCHAR(15) NOT NULL,
+
+LIB_id INTEGER NOT NULL,
+SOC_id INTEGER NOT NULL,
+
+FOREIGN KEY (LIB_id) REFERENCES Libro(LIB_id),
+FOREIGN KEY (SOC_id) REFERENCES Socio(SOC_id)
+
+);
