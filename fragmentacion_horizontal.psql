@@ -1,0 +1,52 @@
+select * from sede
+
+insert into sede(sed_ubicacion_estado, sed_telefono, sed_email) values
+	('Morelia', '5680987324', 'morelia_biblioteca@empresa.com'),
+	('Leon', '5690224562', 'leon_biblioteca@empresa.com'),
+	('Queretaro', '5678123461', 'queretaro_biblioteca@empresa.com'),
+	('CDMX', '5609092143', 'cdmx_biblioteca@empresa.com'),
+	('Estado de Mexico', '5609871243', 'estado_mexico_biblioteca@empresa.com');
+	
+select lib_id, lib_titulo, lib_autor, sed_ubicacion_estado from libro 
+inner join sede on libro.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'Morelia';
+
+select lib_id, lib_titulo, lib_autor, sed_ubicacion_estado from libro 
+inner join sede on libro.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'Leon';
+
+select lib_id, lib_titulo, lib_autor, sed_ubicacion_estado from libro 
+inner join sede on libro.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'Queretaro';
+
+select lib_id, lib_titulo, lib_autor, sed_ubicacion_estado from libro 
+inner join sede on libro.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'CDMX';
+
+select lib_id, lib_titulo, lib_autor, sed_ubicacion_estado from libro 
+inner join sede on libro.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'Estado de Mexico';
+
+select * from socio
+select soc_id, soc_nombre, soc_telefono, soc_email, sed_ubicacion_estado from socio
+inner join sede on socio.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'Morelia';
+
+select soc_id, soc_nombre, soc_telefono, soc_email, sed_ubicacion_estado from socio
+inner join sede on socio.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'Leon';
+
+select soc_id, soc_nombre, soc_telefono, soc_email, sed_ubicacion_estado from socio
+inner join sede on socio.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'Queretaro';
+
+select soc_id, soc_nombre, soc_telefono, soc_email, sed_ubicacion_estado from socio
+inner join sede on socio.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'CDMX';
+
+
+
+select soc_id, soc_nombre, soc_telefono, soc_email, sed_ubicacion_estado from socio
+inner join sede on socio.sed_id = sede.sed_id
+where sede.sed_ubicacion_estado = 'Estado de Mexico';
+
