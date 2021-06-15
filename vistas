@@ -1,0 +1,24 @@
+create view vista_ficha_renta as
+select s.SOC_id,s.SOC_identificador,s.SOC_nombre,l.LIB_titulo,l.LIB_id,l.LIB_ISBN,r.REN_id,r.REN_fecha_renta, r.REN_fecha_regreso,f.FR_estado from renta r
+inner join ficha_renta f on r.REN_id = f.REN_id
+inner join libro l on f.LIB_id = l.LIB_id
+inner join socio s on r.SOC_id = s.SOC_id;
+
+
+-- Creación de la vista de ficha_prestamo
+create view vista_ficha_prestamo as
+select l.LIB_id,l.LIB_titulo,l.LIB_ISBN,p.PRE_hora_prestamo, p.PRE_id,p.PRE_hora_regreso, p.PRE_fecha,f.FP_estado from prestamo p
+inner join ficha_prestamo f on p.PRE_id = f.PRE_id
+inner join libro l on l.LIB_id = f.LIB_id;
+
+
+ -- Creación de la vista de multas
+ create view vista_multa as
+ select s.SOC_id,s.SOC_identificador,s.SOC_nombre,m.MUL_monto,m.MUL_descripcion,m.MUL_estado from multa m
+ inner join socio s on m.SOC_id = s.SOC_id;
+
+ -- Creación de la vista lista_espera
+ create view vista_lista_espera as
+ select s.SOC_id,s.SOC_identificador,s.SOC_nombre,l.LIB_id,l.LIB_ISBN,l.LIB_titulo,s.SOC_telefono,le.LE_estado from lista_espera le
+ inner join libro l on le.LIB_id = l.LIB_id
+ inner join socio s on le.SOC_id = s.SOC_id;
